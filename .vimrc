@@ -6,6 +6,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'preservim/nerdtree'
 Plugin 'itchyny/lightline.vim'
+Plug 'ap/vim-css-color'
 call vundle#end()
 filetype plugin indent on
 
@@ -44,5 +45,4 @@ set tabstop=2
 set expandtab
 set linebreak    "Wrap lines at convenient points
 
-" css color highlight
-let g:cssColorVimDoNotMessMyUpdatetime = 1
+
