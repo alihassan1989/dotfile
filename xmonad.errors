@@ -1,0 +1,15 @@
+
+xmonad.hs:198:26: warning: [-Wdeprecations]
+    In the use of ‘spacing’ (imported from XMonad.Layout.Spacing):
+    Deprecated: "Use spacingRaw instead."
+    |
+198 | myLayout = avoidStruts $ spacing 5 $ Tall 1 (3/100) (1/2)
+    |                          ^^^^^^^
+
+xmonad.hs:304:12: warning: [-Wdeprecations]
+    In the use of ‘defaultConfig’
+    (imported from XMonad, but defined in XMonad.Config):
+    Deprecated: "Use def (from Data.Default, and re-exported by XMonad and XMonad.Config) instead."
+    |
+304 | defaults = defaultConfig {
+    |            ^^^^^^^^^^^^^
