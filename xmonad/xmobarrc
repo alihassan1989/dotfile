@@ -5,7 +5,7 @@ Config { font = "xft:Source Code Pro:weight=bold:pixelsize=12:antialias=true:hin
        , bgColor = "#282a36"
        , fgColor = "#f8f8f2"
        , alpha = 255
-       , position = Top
+       , position = Top  
        , textOffset = -1
        , iconOffset = -1
        , lowerOnStart = True
@@ -23,9 +23,23 @@ Config { font = "xft:Source Code Pro:weight=bold:pixelsize=12:antialias=true:hin
                     , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
                     , Run StdinReader
                     , Run Network "wlp3s0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    , Run Battery [ "--template" , "<fc=#bd93f9>Bat: <acstatus></fc>"
+                                , "--L" , "15"
+                                , "--H" , "75"
+                                , "--low"      , "darkred"
+                                , "--normal"   , "darkorange"
+                                , "--high"     , "#1ABC9C"
+                                , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#1ABC9C>Charged</fc>"
+                                ] 50
                     ]
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%StdinReader% }\
-                    \{ <fc=#ee9a00>%date%</fc> | <fc=#8be9fd>%wlp3s0%</fc>"
+                    \{ <fc=#bd93f9>%date%</fc> | %battery% | <fc=#ff79c6>%wlp3s0%</fc>"
        }
