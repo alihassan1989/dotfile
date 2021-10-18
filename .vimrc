@@ -1,4 +1,6 @@
-" vundle plugins
+" B
+" Vundle plugins
+
 set nocompatible 
 filetype off 
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -6,28 +8,26 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'preservim/nerdtree'
 Plugin 'itchyny/lightline.vim'
-Plug 'ap/vim-css-color'
 call vundle#end()
 filetype plugin indent on
 
-"dracula theme
-packadd! dracula
-syntax enable
-colorscheme dracula
-
-" lightline
-set laststatus=2
-let g:lightline = {
-      \ 'colorscheme': 'darcula',
-      \ }
 
 " NERDTree
 nnoremap <C-t> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
+" lightline settings
+set laststatus=2
+
+let g:lightline = {
+        \ 'colorscheme': 'one',
+        \ 'background' : 'dark',
+      \ }
+
+
 " Basic settings
 syntax on
-set number
+set relativenumber
 
 " search
 set incsearch       " Find the next match as we type the search
@@ -44,5 +44,4 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 set linebreak    "Wrap lines at convenient points
-
 
