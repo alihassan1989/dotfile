@@ -125,13 +125,13 @@ super + {Left,Down,Up,Right}
 
 # sound
 XF86AudioRaiseVolume
-  amixer set Master 5%+
+  amixer -D pulse sset Master 5%+ ​>​ /dev/null
 
 XF86AudioLowerVolume
-  amixer set Master 5%-
+  amixer -D pulse sset Master 5%- ​>​ /dev/null
 
 XF86AudioMute
-  amixer set Master toggle
+  amixer -D pulse ​set​ Master 1+ toggle 
 
 # xbacklight
 XF86MonBrightnessDown
