@@ -278,7 +278,7 @@ myBar = "xmobar"
 myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "|" "|"
                 , ppVisible = xmobarColor "#c792ea" ""
                 , ppHidden = xmobarColor "#82AAFF" ""
-                , ppHiddenNoWindows = xmobarColor "#82AAFF" ""
+                , ppHiddenNoWindows = xmobarColor "#808080" ""
                -- , ppTitle = xmobarColor "#b3afc2" "" . shorten 60
                 }
 
