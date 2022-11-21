@@ -20,3 +20,16 @@ nmcli device show
 nmcli device wifi list
 nmcli --ask device wifi connect $SSID 
 
+# if none of the above works try this
+add this to your /etc/apt/sources.list
+http.debian.net/debian/ wheezy main contrib non-free
+
+than run this command:
+apt-get install linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,') broadcom-sta-dkms
+
+last, run this command to remove conflicting drivers
+modprobe -r b44 b43 b43legacy ssb brcmsmac
+
+than run this command:
+modprobe wl
+reboot
