@@ -1,0 +1,22 @@
+sudo apt-get update
+sudo apt-get install broadcom-sta-*
+sudo modprobe wl
+echo "wl" | sudo tee -a /etc/modules
+
+
+# if the above doesn't work try this
+
+add to /etc/apt/sources.list
+# Debian 9 "stretch"
+deb http://deb.debian.org/debian/ stretch main contrib non-free
+save and exit
+sudo apt update
+sudo apt install firmware-b43-installer
+
+# install and use nmcli
+sudo apt install network-manager #this will install nmcli and nmtui and all the necessary dependancies.
+
+nmcli device show
+nmcli device wifi list
+nmcli --ask device wifi connect $SSID 
+
