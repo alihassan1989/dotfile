@@ -1,8 +1,9 @@
--- If LuaRocks is installed, make sure that packages installed through it are
+-- If LuaRocgit clone https://github.com/pltanton/net_widgets.git ~/.config/awesome/net_widgetsks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
+local net_widgets = require("net_widgets")
 local lain = require ("lain")
 local freedesktop = require ("freedesktop")
 local gears = require("gears")
@@ -52,19 +53,28 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/home/ali/.config/awesome/theme.lua")
+--beautiful.font = "JetBrain Mono 8"
+beautiful.font = "Font Awesome Free Regular 8"
+net_wireless = net_widgets.wireless({interface = "wlp0s20f3"})
 
 -- Gaps
 beautiful.useless_gap = 3
 
 --auto start
-awful.spawn.with_shell("nm-applet")
+--awful.spawn.with_shell("nm-applet")
+awful.spawn.with_shell("picom --config /home/ali/.config/picom/picom.conf")
+awful.spawn.with_shell("thunderbird")
 awful.spawn.with_shell("nitrogen --restore")
-awful.util.spawn_with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+awful.spawn.with_shell("numlockx")
+awful.util.spawn_with_shell("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
+awful.util.spawn_with_shell("dunst -conf /home/ali/.config/dunst/dunstrc")
 
 -- This is used later as the default terminal and editor to run.
-local browser = "brave"
+--local browser = "brave"
+local browser = "firefox"
 local terminal = "kitty"
 local filemanger = "thunar"
+local screenshot = "flameshot"
 local editor = os.getenv("vim") or "nano"
 local editor_cmd = terminal .. " -e " .. editor
 local modkey = "Mod4"
@@ -105,13 +115,6 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
---mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
---                                   { "open terminal", terminal },
---                                   { "Logout", function() awesome.quit() end },
---                                   { "Reboot", "systemctl reboot" },
---                                   { "Shutdown", "systemctl poweroff" }
---                                 }
---                       })
 
 -- building the right click menu:
 awful.util.mymainmenu = freedesktop.menu.build({
@@ -216,7 +219,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    --awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "MAIL", "WWW", "CMD", "IM", "VIDEO", "FILES", "REC", "MEDIA", "MICS" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -242,6 +246,13 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons
     }
 
+
+    -- systray
+    local systray = wibox.widget.systray()
+    systray:set_base_size(16)
+    
+    -- seperator
+    local sep = wibox.widget.textbox("  ")
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -258,15 +269,29 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
-            volume_widget(),
-             brightness_widget(),
+            sep,
+            net_wireless,
+            sep,
+            volume_widget{
+            widget_type = 'arc',
+            device = 'default',
+            },
+            sep,
+            brightness_widget(),
+            sep,
             batteryarc_widget(),
-            wibox.widget.systray(),
+            sep,
+            wibox.container.margin(
+            systray,
+            5,5,5,5, "#1e1e2e" 
+            ),
+            sep,
             mytextclock,
-            s.mylayoutbox,
+           -- s.mylayoutbox,
         },
     }
 end)
+
 -- }}}
 
 -- {{{ Mouse bindings
@@ -309,11 +334,12 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
    
     -- brightness control
-     awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.util.spawn("xbacklight -dec 15") end),
-    awful.key({ }, "XF86MonBrightnessUp", function ()
-        awful.util.spawn("xbacklight -inc 15") end),
-
+    -- awful.key({ }, "XF86MonBrightnessDown", function ()
+    --    awful.util.spawn("xbacklight -dec 15") end),
+    -- awful.key({ }, "XF86MonBrightnessUp", function ()
+    --    awful.util.spawn("xbacklight -inc 15") end),
+    awful.key({ modkey         }, ";", function () brightness_widget:inc() end, {description = "increase brightness", group = "custom"}),
+    awful.key({ modkey, "Shift"}, ";", function () brightness_widget:dec() end, {description = "decrease brightness", group = "custom"}),
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
               {description = "swap with next client by index", group = "client"}),
@@ -397,13 +423,17 @@ globalkeys = gears.table.join(
               {description = "show rofi", group = "launcher"}),
     
     -- launch applications
-    awful.key({ modkey }, "b", function() awful.util.spawn("brave") end,
-              {description = "show brave", group = "launcher"}),
+    --awful.key({ modkey }, "b", function() awful.util.spawn("flatpak run com.brave.Browser") end,
+              --{description = "show brave", group = "launcher"}),
+    awful.key({ modkey }, "b", function() awful.util.spawn("firefox") end,
+              {description = "show firefox", group = "launcher"}),
+    awful.key({ modkey }, "p", function() awful.util.spawn("flameshot") end,
+              {description = "show flameshot", group = "launcher"}),
     awful.key({ modkey }, "n", function() awful.util.spawn("thunar") end,
               {description = "show thunar", group = "launcher"}),
 
      -- lockscreen
-     awful.key({modkey, "Control" }, "l", function() awful.util.spawn("i3lock -e -B sigma -k") awful.util.spawn("xautolock -locknow") end,
+     awful.key({modkey, "Control" }, "l", function() awful.util.spawn("i3lock --image=/home/ali/Pictures/catppuccin-mocha.png") awful.util.spawn("xautolock -locknow") end,
                {description = "Locks the screen on demand.", group = "Hotkeys"})
               
 )
