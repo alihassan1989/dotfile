@@ -11,7 +11,7 @@ set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
-set cc=80                  " set an 80 column border for good coding style
+"set cc=80                  " set an 80 column border for good coding style
 filetype plugin indent on   "allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
 set mouse=a                 " enable mouse click
@@ -22,3 +22,22 @@ set ttyfast                 " Speed up scrolling in Vim
 " set spell                 " enable spell check (may need to download language package)
 " set noswapfile            " disable creating swap file
 " set backupdir=~/.cache/vim " Directory to store backup files.
+
+"vundle package manager
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+set termguicolors
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'vimwiki/vimwiki'
+Plugin 'preservim/nerdtree'
+Plugin 'itchyny/lightline.vim'
+Plugin 'catppuccin/vim', { 'as': 'catppuccin' }
+call vundle#end()
+
+" NERDTree
+nnoremap <C-t> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+
+" lightline settings
+set laststatus=2
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
