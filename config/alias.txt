@@ -1,0 +1,6 @@
+alias update='sudo apt-get update'
+alias upgrade='sudo apt-get upgrade'
+alias in='sudo apt-get install'
+alias rm='sudo apt-get remove'
+alias autorm='sudo apt-get autoremove'
+alias pr='sudo apt-get purge'
