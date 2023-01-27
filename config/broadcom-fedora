@@ -1,0 +1,9 @@
+$ sudo dnf install akmod-wl
+
+#######“kernel-devel” is needed but building wl fails with the preinstalled package.
+
+$ sudo dnf install buildsys-build-rpmfusion-kerneldevpkgs-current
+
+$ sudo akmods --force --kernel ‘uname -r’ --akmod wl
+
+$ sudo reboot
