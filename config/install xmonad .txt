@@ -1,9 +1,0 @@
-#install xmonad
-sudo apt-get install libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev
-
-git clone https://github.com/xmonad/xmonad
-git clone https://github.com/xmonad/xmonad-contrib
-
-sudo apt install haskell-stack
-
-sudo apt-get install xmobar
