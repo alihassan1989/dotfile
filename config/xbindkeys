@@ -1,0 +1,29 @@
+# Volume up
+"amixer set Master 5%+ unmute && notify-send -i audio-volume-high ' Volume Up'"
+XF86AudioRaiseVolume
+
+# Volume down
+"amixer set Master 5%- unmute && notify-send -i audio-volume-low ' Volume Down'"
+XF86AudioLowerVolume
+
+# Mute toggle
+"amixer set Master toggle && notify-send -i audio-volume-muted '󰖁 Volume Mute Toggle'"
+XF86AudioMute
+
+# Brightness up
+"xbacklight -inc 10 && notify-send -i display-brightness-high '󰃟 Brightness Up'"
+XF86MonBrightnessUp
+
+# Brightness down
+"xbacklight -dec 10 && notify-send -i display-brightness-low '󰃞 Brightness Down'"
+XF86MonBrightnessDown
+
+# Keyboard backlight increase
+"brightnessctl --device='smc::kbd_backlight' set +1"
+XF86KbdBrightnessUp
+#c:238
+
+# keyboard backlight decrease
+"brightnessctl --device='smc::kbd_backlight' set 1%-"
+XF86KbdBrightnessDown
+#c:237
